@@ -8,6 +8,8 @@ provider:
   name: aws
   runtime: go1.x
   lambdaHashingVersion: 20201221
+  stage: prod
+  region: ap-northeast-1
 
 package:
   patterns:
