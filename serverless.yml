@@ -20,7 +20,7 @@ service: tokyo-dome-event-notifyer
 # Check out our docs for more details
 frameworkVersion: '2'
 
-ueDotenv: true
+useDotenv: true
 
 provider:
   name: aws
