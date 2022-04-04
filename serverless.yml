@@ -1,6 +1,6 @@
 service: tokyo-dome-event-notifyer
 
-frameworkVersion: '2'
+frameworkVersion: '3'
 
 useDotenv: true
 
@@ -8,7 +8,6 @@ provider:
   name: aws
   runtime: go1.x
   lambdaHashingVersion: 20201221
-  TZ: Asia/Tokyo
 
 package:
   patterns:
