@@ -19,5 +19,7 @@ package:
 functions:
   notify:
     handler: bin/handler
+    events:
+      - schedule: cron(0 21 * * * *)
     environment:
       SLACK_WEBHOOK_URL: ${env:SLACK_WEBHOOK_URL}
