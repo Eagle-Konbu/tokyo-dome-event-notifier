@@ -10,7 +10,7 @@ import (
 )
 
 func FetchTodayEvent() string {
-	time.LoadLocation("Asia/Tokyo")
+	jst, _ := time.LoadLocation("Asia/Tokyo")
 
 	res, err := http.Get("https://www.tokyo-dome.co.jp/dome/event/schedule.html")
 
@@ -38,7 +38,7 @@ func FetchTodayEvent() string {
 		title := s.Find(titleSelector).Text()
 		info := s.Find(timeSelector).Text()
 
-		if date == time.Now().Day() {
+		if date == time.Now().In(jst).Day() {
 			if title == "" {
 				event = "イベントなし"
 			} else {
