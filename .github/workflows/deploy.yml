@@ -3,8 +3,6 @@ name: Deploy
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
 
@@ -19,10 +17,6 @@ jobs:
       uses: actions/setup-go@v3
       with:
         go-version: 1.17
-    
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '14'
 
     - name: Build
       run: make build
