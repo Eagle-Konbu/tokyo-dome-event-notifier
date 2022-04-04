@@ -10,6 +10,8 @@ import (
 )
 
 func FetchTodayEvent() string {
+	time.LoadLocation("Asia/Tokyo")
+
 	res, err := http.Get("https://www.tokyo-dome.co.jp/dome/event/schedule.html")
 
 	if err != nil {
