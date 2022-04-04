@@ -19,7 +19,7 @@ package:
 functions:
   notify:
     handler: bin/handler
-    memorySize: 256
+    memorySize: 128
     events:
       - schedule: cron(0 21 * * ? *)
     environment:
