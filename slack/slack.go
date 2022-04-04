@@ -5,18 +5,32 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strings"
+	"time"
 )
 
 func SendEventInfo(text string) {
+	t := time.Now()
+	weekdayja := strings.NewReplacer(
+		"Sun", "日",
+		"Mon", "月",
+		"Tue", "火",
+		"Wed", "水",
+		"Thu", "木",
+		"Fri", "金",
+		"Sat", "土",
+	)
+	date := weekdayja.Replace(t.Format("2006年1月2日(Mon曜日)"))
+
 	url := os.Getenv("SLACK_WEBHOOK_URL")
 	body := fmt.Sprintf(`{
-		"text": "本日のイベント情報",
+		"text": "%sのイベント情報",
 		"blocks": [
 			{
 				"type": "header",
 				"text": {
 					"type": "plain_text",
-					"text": "本日のイベント情報"
+					"text": "%sのイベント情報"
 				}
 			},
 			{
@@ -31,7 +45,7 @@ func SendEventInfo(text string) {
 				}
 			}
 		]
-	}`, text)
+	}`, date, date, text)
 
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer([]byte(body)))
 	req.Header.Set("Content-Type", "application/json")
