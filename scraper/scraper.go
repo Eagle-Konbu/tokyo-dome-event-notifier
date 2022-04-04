@@ -36,7 +36,7 @@ func FetchTodayEvent() string {
 		title := s.Find(titleSelector).Text()
 		info := s.Find(timeSelector).Text()
 
-		if date == time.Now().Day()-1 {
+		if date == time.Now().Day() {
 			if title == "" {
 				event = "イベントなし"
 			} else {
