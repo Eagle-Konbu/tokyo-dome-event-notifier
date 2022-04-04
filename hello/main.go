@@ -9,6 +9,7 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/tokyo-dome-event-notifyer/scraper"
+	"github.com/tokyo-dome-event-notifyer/slack"
 )
 
 // Response is of type APIGatewayProxyResponse since we're leveraging the
@@ -21,6 +22,8 @@ type Response events.APIGatewayProxyResponse
 func Handler(ctx context.Context) (Response, error) {
 	event := scraper.FetchTodayEvent()
 	fmt.Println(event)
+
+	slack.SendEventInfo(event)
 
 	var buf bytes.Buffer
 
