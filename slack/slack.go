@@ -10,6 +10,7 @@ import (
 )
 
 func SendEventInfo(text string) {
+	time.LoadLocation("Asia/Tokyo")
 	t := time.Now()
 	weekdayja := strings.NewReplacer(
 		"Sun", "日",
