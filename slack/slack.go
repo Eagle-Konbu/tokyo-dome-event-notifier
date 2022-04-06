@@ -31,7 +31,7 @@ func SendEventInfo(text string) {
 				"type": "header",
 				"text": {
 					"type": "plain_text",
-					"text": "%sのイベント情報"
+					"text": ":baseball_bat: %sのイベント情報 :concert:"
 				}
 			},
 			{
