@@ -2,25 +2,23 @@ package scraper
 
 import (
 	"fmt"
-	"net/http"
-	"strconv"
 	"time"
 
-	"github.com/PuerkitoBio/goquery"
+	"github.com/gocolly/colly"
 )
 
 func FetchTodayEvent() (string, error) {
 	jst, _ := time.LoadLocation("Asia/Tokyo")
 
-	res, err := http.Get("https://www.tokyo-dome.co.jp/dome/event/schedule.html")
+	url := "https://www.tokyo-dome.co.jp/dome/event/schedule.html"
 
-	if err != nil {
+	c := colly.NewCollector()
+
+	var err error
+	c.OnError(func(_ *colly.Response, e error) {
 		fmt.Println("Failed to scrape")
-		return "", err
-	}
-	defer res.Body.Close()
-
-	doc, _ := goquery.NewDocumentFromReader(res.Body)
+		err = e
+	})
 
 	selector := "div.c-mod-tab__body:nth-child(2) > table > tbody"
 	innerSelector := "tr.c-mod-calender__item"
@@ -29,22 +27,30 @@ func FetchTodayEvent() (string, error) {
 	titleSelector := "td > div > div:nth-child(2) > p.c-mod-calender__links"
 	timeSelector := "td > div > div:nth-child(2) > p:nth-child(2)"
 
-	selection := doc.Find(selector)
-
 	var event string
-	selection.Find(innerSelector).Each(func(index int, s *goquery.Selection) {
-		date, _ := strconv.Atoi(s.Find(dateSelector).Text())
-		category := s.Find(categorySelector).Text()
-		title := s.Find(titleSelector).Text()
-		info := s.Find(timeSelector).Text()
+	c.OnHTML(selector, func(e *colly.HTMLElement) {
+		e.ForEach(innerSelector, func(_ int, s *colly.HTMLElement) {
+			date := s.ChildText(dateSelector)
+			category := s.ChildText(categorySelector)
+			title := s.ChildText(titleSelector)
+			info := s.ChildText(timeSelector)
+			today := time.Now().In(jst).Format("02")
 
-		if date == time.Now().In(jst).Day() {
-			if title == "" {
-				event = "イベントなし"
-			} else {
-				event = title + "（" + category + "）" + "\n" + info
+			if date == today {
+				if title == "" {
+					event = "イベントなし"
+				} else {
+					event = title + "（" + category + "）" + "\n" + info
+				}
 			}
-		}
+		})
 	})
+
+	c.Visit(url)
+
+	if err != nil {
+		return "", err
+	}
+
 	return event, nil
 }
