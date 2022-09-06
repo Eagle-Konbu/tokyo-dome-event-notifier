@@ -20,7 +20,11 @@ type Response events.APIGatewayProxyResponse
 
 // Handler is our lambda handler invoked by the `lambda.Start` function call
 func Handler(ctx context.Context) (Response, error) {
-	event := scraper.FetchTodayEvent()
+	event, err := scraper.FetchTodayEvent()
+	if err != nil {
+		return Response{StatusCode: 500}, err
+	}
+
 	fmt.Println(event)
 
 	slack.SendEventInfo(event)

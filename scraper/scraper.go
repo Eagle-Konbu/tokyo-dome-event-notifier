@@ -9,14 +9,14 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-func FetchTodayEvent() string {
+func FetchTodayEvent() (string, error) {
 	jst, _ := time.LoadLocation("Asia/Tokyo")
 
 	res, err := http.Get("https://www.tokyo-dome.co.jp/dome/event/schedule.html")
 
 	if err != nil {
 		fmt.Println("Failed to scrape")
-		panic(err)
+		return "", err
 	}
 	defer res.Body.Close()
 
@@ -46,5 +46,5 @@ func FetchTodayEvent() string {
 			}
 		}
 	})
-	return event
+	return event, nil
 }
