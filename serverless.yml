@@ -1,4 +1,4 @@
-service: tokyo-dome-event-notifyer
+service: tokyo-dome-event-notifier
 
 frameworkVersion: '3'
 

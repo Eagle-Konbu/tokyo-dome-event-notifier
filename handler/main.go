@@ -8,8 +8,8 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
-	"github.com/tokyo-dome-event-notifyer/scraper"
-	"github.com/tokyo-dome-event-notifyer/slack"
+	"github.com/tokyo-dome-event-notifier/scraper"
+	"github.com/tokyo-dome-event-notifier/slack"
 )
 
 // Response is of type APIGatewayProxyResponse since we're leveraging the
@@ -20,7 +20,11 @@ type Response events.APIGatewayProxyResponse
 
 // Handler is our lambda handler invoked by the `lambda.Start` function call
 func Handler(ctx context.Context) (Response, error) {
-	event := scraper.FetchTodayEvent()
+	event, err := scraper.FetchTodayEvent()
+	if err != nil {
+		return Response{StatusCode: 500}, err
+	}
+
 	fmt.Println(event)
 
 	slack.SendEventInfo(event)
