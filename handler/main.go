@@ -8,8 +8,8 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
-	"github.com/tokyo-dome-event-notifyer/scraper"
-	"github.com/tokyo-dome-event-notifyer/slack"
+	"github.com/tokyo-dome-event-notifier/scraper"
+	"github.com/tokyo-dome-event-notifier/slack"
 )
 
 // Response is of type APIGatewayProxyResponse since we're leveraging the

@@ -1,4 +1,4 @@
-module github.com/tokyo-dome-event-notifyer
+module github.com/tokyo-dome-event-notifier
 
 go 1.17
 
