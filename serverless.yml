@@ -21,6 +21,6 @@ functions:
     handler: bin/handler
     memorySize: 128
     events:
-      - schedule: cron(0 21 * * ? *)
+      - schedule: cron(0 23 * * ? *)
     environment:
       SLACK_WEBHOOK_URL: ${env:SLACK_WEBHOOK_URL}
