@@ -25,7 +25,7 @@ func SendEventInfo(text string) {
 
 	url := os.Getenv("SLACK_WEBHOOK_URL")
 	body := fmt.Sprintf(`{
-		"text": "%sのイベント情報",
+		"text": "%s",
 		"blocks": [
 			{
 				"type": "header",
@@ -46,7 +46,7 @@ func SendEventInfo(text string) {
 				}
 			}
 		]
-	}`, date, date, text)
+	}`, text, date, text)
 
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer([]byte(body)))
 	req.Header.Set("Content-Type", "application/json")
